@@ -48,6 +48,16 @@ period = st.sidebar.selectbox(
     ["1mo", "3mo", "6mo", "1y", "5y"]
 )
 
+compare_stock = st.sidebar.selectbox(
+    "Compare With",
+    ["None", "AAPL", "MSFT", "NVDA", "AMZN", "TSLA", "META"]
+)
+
+compare_stock = st.sidebar.selectbox(
+    "Compare With",
+    ["None", "AAPL", "MSFT", "NVDA", "AMZN", "TSLA", "META"]
+)
+
 # ------------------------
 # Helper Functions
 # ------------------------
@@ -194,6 +204,29 @@ try:
         x=hist.index,
         y="Close",
         title=f"{ticker_input} Price Trend"
+    )
+
+    if compare_stock != "None":
+
+    compare_hist = yf.Ticker(compare_stock).history(period=period)
+
+    fig.add_scatter(
+        x=compare_hist.index,
+        y=compare_hist["Close"],
+        mode="lines",
+        name=compare_stock
+    )
+    
+    fig.update_layout(
+    template="plotly_white",
+    height=600
+)
+    
+    fig.add_scatter(
+        x=compare_hist.index,
+        y=compare_hist["Close"],
+        mode="lines",
+        name=compare_stock
     )
 
     fig.update_layout(
